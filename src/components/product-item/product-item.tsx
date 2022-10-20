@@ -18,7 +18,7 @@ function ProductItem({productData}: ProductProps): JSX.Element {
 
   return (
     <li className='flex flex-col mb-4 p-4 border-2 rounded border-slate-400'>
-      <h3 className='mb-6 text-center text-2xl font-bold'>{title}</h3>
+      <h2 className='mb-6 text-center text-2xl font-bold'>{title}</h2>
       <img src={image} className="block mx-auto mb-4 w-40 h-40" alt="picture about image" />
       <div className='flex justify-between items-center mb-4'>
         <p className='font-bold'>{`Рейтинг товара: ${rating.rate}`}</p>
