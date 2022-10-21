@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Product } from './../../types/product';
 import ProductItem from '../../components/product-item/product-item';
 import Modal from '../../components/modal/modal';
+import CatalogForm from './../../components/catalog-form/catalog-form';
 
 type CatalogProps = {
   catalogData: Product[],
@@ -19,7 +20,7 @@ function Catalog({catalogData}: CatalogProps): JSX.Element {
         <Modal
           onClose={() => setModalStatus(false)}
         >
-          <h1 className='text-center'>Модальное окно</h1>
+          <CatalogForm />
         </Modal>
         }
       {!isModalOpen && <button
