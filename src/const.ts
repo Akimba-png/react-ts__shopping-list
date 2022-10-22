@@ -7,3 +7,9 @@ export enum ApiRoute {
 export enum Message {
   LoadingFail = 'Something strange is going here',
 }
+
+export enum ValidRule {
+  NotEmpty = 'not-empty',
+  MinLength = 'min-length',
+  MaxLength = 'max-length',
+}
