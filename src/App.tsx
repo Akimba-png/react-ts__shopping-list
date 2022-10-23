@@ -1,18 +1,18 @@
 import { useFetch } from './hooks/useFetch';
 import { Product } from './types/product';
 import Catalog from './pages/catalog/catalog';
-import Loader from './components/loader/loader';
+import MainLoader from './components/loaders/main-loader/main-loader';
 import ErrorNotifier from './components/error-notifier/error-notifier';
 import { ApiRoute, Message } from './const';
 
 function App() {
-  const {value, loadingStatus, error} = useFetch<Product[]>(ApiRoute.Product, []);
+  const {value, addValue, loadingStatus, error} = useFetch<Product>(ApiRoute.Product, []);
 
   return (
     <div className='container mx-auto'>
-      {loadingStatus && <Loader /> }
-      {error && <ErrorNotifier message={Message.LoadingFail} />}
-      {(!loadingStatus && !error) && <Catalog catalogData={value} />}
+      {loadingStatus && <MainLoader /> }
+      {error && <ErrorNotifier message={Message.LoadingFail} additionalStyle='text-xl' />}
+      {(!loadingStatus && !error) && <Catalog catalogData={value} onAddValue={addValue} />}
     </div>
   );
 }

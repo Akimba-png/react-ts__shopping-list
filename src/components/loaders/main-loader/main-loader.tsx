@@ -1,6 +1,6 @@
-import './loader.style.css';
+import './main-loader.style.css';
 
-function Loader(): JSX.Element {
+function MainLoader(): JSX.Element {
   return (
     <div className='flex flex-col items-center pt-40'>
       <div className="mb-6 lds-dual-ring"></div>
@@ -10,4 +10,4 @@ function Loader(): JSX.Element {
   );
 }
 
-export default Loader;
+export default MainLoader;

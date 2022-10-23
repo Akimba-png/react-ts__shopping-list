@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
-import { BASE_URL, ApiRoute } from '../const';
+import { BASE_URL, ApiRoute, DATA_LIMIT } from '../const';
 
-export const useFetch = <T>(endpoint: ApiRoute, initialValue: T) => {
-  const [value, setValues] = useState<T>(initialValue);
+export const useFetch = <T>(endpoint: ApiRoute, initialValue: T[]) => {
+  const [value, setValues] = useState<T[]>(initialValue);
   const [loadingStatus, setLoadingStatus] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -11,8 +11,8 @@ export const useFetch = <T>(endpoint: ApiRoute, initialValue: T) => {
     try {
       setError('');
       setLoadingStatus(true);
-      const response = await axios.get<T>(BASE_URL + endpoint);
-      setValues(response.data);
+      const response = await axios.get<T[]>(BASE_URL + endpoint + DATA_LIMIT);
+      setValues(response.data as T[]);
       setLoadingStatus(false);
     } catch (e: unknown) {
       const error = e as AxiosError;
@@ -21,9 +21,13 @@ export const useFetch = <T>(endpoint: ApiRoute, initialValue: T) => {
     }
   };
 
+  const addValue = (data: T) => {
+    setValues((prev) => [...prev, data]);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  return { value, loadingStatus, error };
+  return { value, addValue, loadingStatus, error };
 };

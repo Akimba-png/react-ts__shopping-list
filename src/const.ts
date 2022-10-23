@@ -1,7 +1,8 @@
 export const BASE_URL = 'https://fakestoreapi.com';
+export const DATA_LIMIT = '?limit=5';
 
 export enum ApiRoute {
-  Product = '/products?limit=5',
+  Product = '/products',
 }
 
 export enum Message {

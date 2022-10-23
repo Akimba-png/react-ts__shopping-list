@@ -6,21 +6,22 @@ import CatalogForm from './../../components/catalog-form/catalog-form';
 
 type CatalogProps = {
   catalogData: Product[],
+  onAddValue(data: Product): void,
 }
 
-function Catalog({catalogData}: CatalogProps): JSX.Element {
+function Catalog({catalogData, onAddValue}: CatalogProps): JSX.Element {
   const [isModalOpen, setModalStatus] = useState<boolean>(true);
   return (
     <section className='mx-auto p-4 w-[960px]'>
       <h1 className="mb-6  text-center text-3xl font-bold">Доступные товары</h1>
       <ul className='mx-auto w-[600px]'>
-        {catalogData.map((data) => <ProductItem productData={data} key={data.id} />)}
+        {catalogData.map((data, i) => <ProductItem productData={data} key={`${data.id}-${i}`} />)}
       </ul>
       {isModalOpen &&
         <Modal
           onClose={() => setModalStatus(false)}
         >
-          <CatalogForm />
+          <CatalogForm onAddValue={onAddValue} />
         </Modal>
         }
       {!isModalOpen && <button
