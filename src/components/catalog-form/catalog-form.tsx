@@ -1,8 +1,9 @@
-import { FormEvent } from 'react';
+import { useContext, FormEvent } from 'react';
 import { useInput } from './../../hooks/useInput';
 import { usePost } from '../../hooks/usePost';
-import { Product } from '../../types/product';
 import { Validator } from './../../types/validation';
+import { ModalContext } from '../../context/modal-context';
+import { ApiContext } from '../../context/api-context';
 import ErrorNotifier from '../error-notifier/error-notifier';
 import ButtonLoader from '../loaders/button-loader/button-loader';
 import { productMock } from '../../mock/product';
@@ -14,21 +15,20 @@ const ERROR_RATING_STYLE = ' top-[106px]';
 const titleValidator: Validator = {[ValidRule.NotEmpty]: 1, [ValidRule.MinLength]: 5};
 const ratingValidator: Validator = {[ValidRule.NotEmpty]: 1, [ValidRule.MaxLength]: 2};
 
-type CatalogFormProps = {
-  onAddValue(data: Product): void;
-}
 
-function CatalogForm({onAddValue}: CatalogFormProps): JSX.Element {
+function CatalogForm(): JSX.Element {
   const titleInput = useInput('', titleValidator);
   const ratingInput = useInput('', ratingValidator);
-  const { sendRequest, isLoading } = usePost(ApiRoute.Product, onAddValue);
+  const { addValue } = useContext(ApiContext);
+  const {handlerModalClose} = useContext(ModalContext);
+  const { sendRequest, isLoading, error } = usePost(ApiRoute.Product, addValue);
 
   const handleFormSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     const dataToSend = productMock;
     dataToSend.title = titleInput.value;
     dataToSend.rating.rate = Number(ratingInput.value);
-    sendRequest(dataToSend);
+    sendRequest(dataToSend, handlerModalClose);
   };
 
   return (
@@ -88,7 +88,7 @@ function CatalogForm({onAddValue}: CatalogFormProps): JSX.Element {
         disabled={Boolean(titleInput.error) || Boolean(ratingInput.error) || isLoading}
       >
         {isLoading && <ButtonLoader />}
-        Добавить товар
+        {error ? 'Ошибка, попробовать ещё раз' : 'Добавить товар'}
       </button>
     </form>
   );

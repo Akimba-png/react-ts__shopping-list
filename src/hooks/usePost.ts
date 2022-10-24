@@ -6,13 +6,14 @@ export const usePost = <T>(endPoint: ApiRoute, onSuccess: (value: T) => void) =>
   const [ isLoading, setLoadingStatus ] = useState<boolean>(false);
   const [ error, setError ] = useState<string>('');
 
-  const sendRequest = async (data: T) => {
+  const sendRequest = async (data: T, onFinish: () => void) => {
     try {
-      setError('');
       setLoadingStatus(true);
       const response = await axios.post<T>(BASE_URL + endPoint, data);
       onSuccess(response.data);
       setLoadingStatus(false);
+      onFinish();
+      setError('');
     } catch (e: unknown) {
       const error = e as AxiosError;
       setLoadingStatus(false);
