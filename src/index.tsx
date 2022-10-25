@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 import { ModalState } from './context/modal-context';
+import App from './App';
 import './index.css';
 
 const root = ReactDOM.createRoot(
@@ -9,8 +10,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <ModalState>
-      <App />
-    </ModalState>
+    <BrowserRouter>
+      <ModalState>
+        <App />
+      </ModalState>
+    </BrowserRouter>
   </React.StrictMode>
 );

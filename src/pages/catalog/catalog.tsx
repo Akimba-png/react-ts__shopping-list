@@ -19,7 +19,7 @@ function Catalog(): JSX.Element {
       {loadingStatus && <MainLoader /> }
       {error && <ErrorNotifier message={Message.LoadingFail} additionalStyle='text-xl' />}
       {(!loadingStatus && !error) && (
-        <section className='constainer mx-auto p-4 w-[960px]'>
+        <section className='container mx-auto p-4 w-[960px]'>
           <h1 className="mb-6 text-center text-3xl font-bold">Доступные товары</h1>
           <ul className='mx-auto w-[600px]'>
             {catalogData.map((data, i) => <ProductItem productData={data} key={`${data.id}-${i}`} />)}
