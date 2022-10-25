@@ -5,6 +5,6 @@ interface IApiContext {
   addValue: (data: Product) => void,
 }
 
-export const ApiContext = createContext({
+export const ApiContext = createContext<IApiContext>({
   addValue: (data: Product) => {},
 });
