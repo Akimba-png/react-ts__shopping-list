@@ -1,5 +1,4 @@
-import { useState, ChangeEvent, useTransition } from 'react';
-import InfoList from './../../components/info-list/info-list';
+import { useState, ChangeEvent, useTransition, lazy, Suspense } from 'react';
 
 const TOTAL_AMOUNT = 12000;
 const DEFAULT_DATA = new Array(TOTAL_AMOUNT).fill(null).map((_, i) => `Товар ${i + 1}`);
@@ -10,6 +9,8 @@ const filterData = (value: string) => {
       : DEFAULT_DATA
   );
 };
+
+const InfoList = lazy(() => import('./../../components/info-list/info-list'));
 
 function Info(): JSX.Element {
   const [ value, setValue ] = useState<string>('');
@@ -42,7 +43,9 @@ function Info(): JSX.Element {
         </label>
       </form>
       {isPending && <p>Запрос обрабатывается</p>}
-      <InfoList data={filteredData} />
+      <Suspense fallback={<p>loading...</p>}>
+        <InfoList data={filteredData} />
+      </Suspense>
     </section>
   );
 }

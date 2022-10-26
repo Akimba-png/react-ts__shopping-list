@@ -19,6 +19,7 @@
 - Функционал React:
   - React context;
   - React cuncurrent mode (useTransition);
+  - React suspense (lazy loading);
 
 
 ## Сценарии:
