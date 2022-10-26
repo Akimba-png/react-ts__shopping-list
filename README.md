@@ -18,6 +18,7 @@
   - Обработка и валидация полей форм;
 - Функционал React:
   - React context;
+  - React cuncurrent mode (useTransition);
 
 
 ## Сценарии:

@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useTransition } from 'react';
 import InfoList from './../../components/info-list/info-list';
 
 const TOTAL_AMOUNT = 12000;
@@ -13,10 +13,15 @@ const filterData = (value: string) => {
 
 function Info(): JSX.Element {
   const [ value, setValue ] = useState<string>('');
-  const filteredData = filterData(value);
+  const [ filter, setFilter ] = useState<string>('');
+  const [ isPending, startTransition ] = useTransition();
+  const filteredData = filterData(filter);
 
   const handleFilterChange = (evt:ChangeEvent<HTMLInputElement>) => {
     setValue(evt.target.value);
+    startTransition(() => {
+      setFilter(evt.target.value);
+    });
   };
 
   return (
@@ -36,6 +41,7 @@ function Info(): JSX.Element {
             />
         </label>
       </form>
+      {isPending && <p>Запрос обрабатывается</p>}
       <InfoList data={filteredData} />
     </section>
   );
