@@ -23,7 +23,10 @@ function Navigation(): JSX.Element {
                 }
                 key={keyValue}
               >
-                <Link className={LINK_DEFAULT_STYLE} to={AppRoute[route]}>{route}</Link>
+                {AppRoute[route] === pathName
+                  ?  <p className={LINK_DEFAULT_STYLE}>{route}</p>
+                  :  <Link className={LINK_DEFAULT_STYLE} to={AppRoute[route]}>{route}</Link>
+                }
               </li>
             );
           })}

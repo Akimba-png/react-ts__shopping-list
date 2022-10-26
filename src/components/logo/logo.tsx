@@ -1,13 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
+const DEFAULT_STYLE = 'text-2xl font-bold uppercase';
+
 function Logo(): JSX.Element {
   const pathName = useLocation().pathname;
   const isCatalogPage = pathName === AppRoute.Catalog;
-  const url = isCatalogPage ? '' : AppRoute.Catalog;
+
   return (
-    <Link className={isCatalogPage ? "cursor-default" : ""} to={url}>
-      <p className='text-2xl font-bold uppercase'>Shopping List app</p>
+    isCatalogPage
+    ? <p className={DEFAULT_STYLE}>Shopping List app</p>
+    :  <Link className={DEFAULT_STYLE} to={AppRoute.Catalog}>
+      Shopping List app
     </Link>
   );
 }
