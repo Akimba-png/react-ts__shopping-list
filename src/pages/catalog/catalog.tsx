@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { ApiContext } from '../../context/api-context';
 import { ModalContext } from './../../context/modal-context';
@@ -13,13 +13,14 @@ import { ApiRoute, Message } from '../../const';
 function Catalog(): JSX.Element {
   const {value: catalogData, addValue, loadingStatus, error} = useFetch<Product>(ApiRoute.Product, []);
   const { isModalOpen, handlerModalOpen, handlerModalClose } = useContext(ModalContext);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   return (
     <ApiContext.Provider value={{addValue}}>
       {loadingStatus && <MainLoader /> }
       {error && <ErrorNotifier message={Message.LoadingFail} additionalStyle='text-xl' />}
       {(!loadingStatus && !error) && (
-        <section className='container mx-auto p-4 w-[960px]'>
+        <section ref={sectionRef} className='container mx-auto p-4 w-[960px]'>
           <h1 className="mb-6 text-center text-3xl font-bold">Доступные товары</h1>
           <ul className='mx-auto w-[600px]'>
             {catalogData.map((data, i) => <ProductItem productData={data} key={`${data.id}-${i}`} />)}
@@ -32,7 +33,10 @@ function Catalog(): JSX.Element {
             </Modal>
           }
           {!isModalOpen && <button
-            onClick={handlerModalOpen}
+            onClick={() => {
+              sectionRef.current?.scrollIntoView({behavior: 'smooth'});
+              handlerModalOpen();
+            }}
             className='fixed right-[350px] bottom-10 px-4 py-2 w-40  bg-red-500 rounded'
             >
               Добавить в каталог
